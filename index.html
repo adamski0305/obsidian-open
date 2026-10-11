@@ -33,12 +33,15 @@
     // [2026-10-11] The Obsidian vault is AIOS; AdamBrain is a folder inside it.
     var VAULT = 'AIOS';
     var PREFIX = 'AdamBrain/';
-    var ALLOWED = /^(People\/[^\/]+\/Working with [^\/]+|Meetings\/coaching\/weekly\/\d{4}-\d{2}-\d{2})$/;
+    // [2026-10-11] Widened from coaching notes only to any note in AdamBrain, for
+    // the morning brief. Still refuses empty paths, hidden folders, '..' and
+    // anything that is not a plain vault path.
+    var ALLOWED = /^(?!\.)(?!.*(^|\/)\.\.?(\/|$))[^\/#?\\][^#?\\]*$/;
     var path = '';
     try { path = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
     var go = document.getElementById('go');
     if (!ALLOWED.test(path)) {
-      document.getElementById('what').textContent = 'This link does not point at a coaching note.';
+      document.getElementById('what').textContent = 'This link does not point at a note.';
       go.style.display = 'none';
       return;
     }
