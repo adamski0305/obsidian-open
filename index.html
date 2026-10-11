@@ -29,7 +29,7 @@
   // AdamBrain coaching email links land here. The vault path is in the URL
   // fragment (after #), which a browser never sends to the server, so this page
   // never sees which note was asked for. It only forwards to the Obsidian app.
-  (function () {
+  function run() {
     var VAULT = 'AdamBrain';
     var ALLOWED = /^(People\/[^\/]+\/Working with [^\/]+|Meetings\/coaching\/weekly\/\d{4}-\d{2}-\d{2})$/;
     var path = '';
@@ -40,13 +40,18 @@
       go.style.display = 'none';
       return;
     }
+    go.style.display = '';
     var uri = 'obsidian://open?vault=' + encodeURIComponent(VAULT) + '&file=' + encodeURIComponent(path);
     go.href = uri;
     document.getElementById('what').textContent = path.split('/').pop();
     // Desktop browsers and Safari follow this straight away; some in-app mail
     // browsers on a phone only allow it from a tap, which is what the button is for.
     location.replace(uri);
-  })();
+  }
+  run();
+  // A second link opened in the same tab changes only the fragment, which does
+  // not reload the page, so run again whenever it changes.
+  window.addEventListener('hashchange', run);
 </script>
 </body>
 </html>
