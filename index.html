@@ -23,14 +23,16 @@
 <main>
   <div id="what">Opening in Obsidian…</div>
   <a class="btn" id="go" href="#">Open in Obsidian</a>
-  <p id="note">If nothing happens, tap the button. Obsidian must be installed on this device with the AdamBrain vault.</p>
+  <p id="note">If nothing happens, tap the button. Obsidian must be installed on this device with the AIOS vault.</p>
 </main>
 <script>
   // AdamBrain coaching email links land here. The vault path is in the URL
   // fragment (after #), which a browser never sends to the server, so this page
   // never sees which note was asked for. It only forwards to the Obsidian app.
   function run() {
-    var VAULT = 'AdamBrain';
+    // [2026-10-11] The Obsidian vault is AIOS; AdamBrain is a folder inside it.
+    var VAULT = 'AIOS';
+    var PREFIX = 'AdamBrain/';
     var ALLOWED = /^(People\/[^\/]+\/Working with [^\/]+|Meetings\/coaching\/weekly\/\d{4}-\d{2}-\d{2})$/;
     var path = '';
     try { path = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
@@ -41,7 +43,7 @@
       return;
     }
     go.style.display = '';
-    var uri = 'obsidian://open?vault=' + encodeURIComponent(VAULT) + '&file=' + encodeURIComponent(path);
+    var uri = 'obsidian://open?vault=' + encodeURIComponent(VAULT) + '&file=' + encodeURIComponent(PREFIX + path);
     go.href = uri;
     document.getElementById('what').textContent = path.split('/').pop();
     // Desktop browsers and Safari follow this straight away; some in-app mail
