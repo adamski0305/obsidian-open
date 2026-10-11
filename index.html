@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<title>Open in Obsidian</title>
+<style>
+  :root { --bg: #ffffff; --fg: #1a1a1a; --muted: #666666; --btn: #6c3fd1; --btn-fg: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161616; --fg: #ececec; --muted: #9a9a9a; --btn: #8b63e6; --btn-fg: #ffffff; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 16px/1.5 -apple-system, Helvetica, Arial, sans-serif; }
+  main { max-width: 420px; margin: 18vh auto 0; padding: 0 16px; text-align: center; }
+  a.btn { display: inline-block; margin: 16px 0; padding: 14px 24px; border-radius: 10px;
+          background: var(--btn); color: var(--btn-fg); text-decoration: none; font-weight: 600; }
+  p { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <div id="what">Opening in Obsidian…</div>
+  <a class="btn" id="go" href="#">Open in Obsidian</a>
+  <p id="note">If nothing happens, tap the button. Obsidian must be installed on this device with the AdamBrain vault.</p>
+</main>
+<script>
+  // AdamBrain coaching email links land here. The vault path is in the URL
+  // fragment (after #), which a browser never sends to the server, so this page
+  // never sees which note was asked for. It only forwards to the Obsidian app.
+  (function () {
+    var VAULT = 'AdamBrain';
+    var ALLOWED = /^(People\/[^\/]+\/Working with [^\/]+|Meetings\/coaching\/weekly\/\d{4}-\d{2}-\d{2})$/;
+    var path = '';
+    try { path = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
+    var go = document.getElementById('go');
+    if (!ALLOWED.test(path)) {
+      document.getElementById('what').textContent = 'This link does not point at a coaching note.';
+      go.style.display = 'none';
+      return;
+    }
+    var uri = 'obsidian://open?vault=' + encodeURIComponent(VAULT) + '&file=' + encodeURIComponent(path);
+    go.href = uri;
+    document.getElementById('what').textContent = path.split('/').pop();
+    // Desktop browsers and Safari follow this straight away; some in-app mail
+    // browsers on a phone only allow it from a tap, which is what the button is for.
+    location.replace(uri);
+  })();
+</script>
+</body>
+</html>
