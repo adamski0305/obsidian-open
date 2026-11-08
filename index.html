@@ -23,16 +23,16 @@
 <main>
   <div id="what">Opening in Obsidian…</div>
   <a class="btn" id="go" href="#">Open in Obsidian</a>
-  <p id="note">If nothing happens, tap the button. Obsidian must be installed on this device with the AIOS vault.</p>
+  <p id="note">If nothing happens, tap the button. Obsidian must be installed on this device with the AdamBrain vault.</p>
 </main>
 <script>
   // AdamBrain coaching email links land here. The vault path is in the URL
   // fragment (after #), which a browser never sends to the server, so this page
   // never sees which note was asked for. It only forwards to the Obsidian app.
   function run() {
-    // [2026-10-11] The Obsidian vault is AIOS; AdamBrain is a folder inside it.
-    var VAULT = 'AIOS';
-    var PREFIX = 'AdamBrain/';
+    // [2026-11-08] Git-backed vault: the Macs' clones and the iPhone mirror are all named AdamBrain, so no folder prefix (until 8 Nov: vault AIOS, folder AdamBrain).
+    var VAULT = 'AdamBrain';
+    var PREFIX = '';
     // [2026-10-11] Widened from coaching notes only to any note in AdamBrain, for
     // the morning brief. Still refuses empty paths, hidden folders, '..' and
     // anything that is not a plain vault path.
